@@ -9,6 +9,9 @@ import { getFirestore } from "https://www.gstatic.com/firebasejs/11.1.0/firebase
 import { collection } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
 import { addDoc } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
 import { serverTimestamp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
+import { getDocs } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js"; 
+import { query } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
+
 
 
 /* === Firebase Setup === */
@@ -52,6 +55,9 @@ const userGreetingEl = document.getElementById("user-greeting")
 const textareaEl = document.getElementById("post-input")
 const postButtonEl = document.getElementById("post-btn")
 
+const fetchPostsButtonEl = document.getElementById("fetch-posts-btn"); 
+const postsContainerEl = document.getElementById("posts-container"); 
+
 /* == UI - Event Listeners == */
 signInWithGoogleButtonEl.addEventListener("click", authSignInWithGoogle)
 
@@ -61,6 +67,8 @@ createAccountButtonEl.addEventListener("click", authCreateAccountWithEmail)
 signOutButtonEl.addEventListener("click", authSignOut)
 
 postButtonEl.addEventListener("click", postButtonPressed)
+
+fetchPostsButtonEl.addEventListener("click", fetchAllPosts);
 
 /* === Main Code === */
 showLoggedOutView()
@@ -102,6 +110,42 @@ function showUserGreeting(element, user){
 
     }
 }
+
+function fetchAllPosts() { 
+    const postsQuery = query(collection(db, "posts"))
+    
+    getDocs(postsQuery) 	
+    .then((querySnapshot) => { 
+    postsContainerEl.innerHTML = ""; 
+    
+    querySnapshot.forEach((doc) => { 
+    const post = doc.data(); 
+    displayPost(post); }); 
+    })
+     
+    .catch((error) => { 
+    console.error("Error fetching posts: ", error.message);
+     }); 
+} 
+
+
+function displayPost(post) { 
+
+    const postCardEl = document.createElement("div"); 
+    postCardEl.classList.add("post-card");
+    let createdAt = post.createdAt
+    if (!post.createdAt){
+        createdAt = "Unknown time"
+    } 
+    postCardEl.innerHTML = ` <h3>${post.uid}</h3> 
+                            <p><strong>Posted on:</strong> ${createdAt} </p> 
+                            <p>${post.body}</p> `; 
+    
+    postsContainerEl.appendChild(postCardEl);
+    
+    }
+    
+    
 
 /* = Functions - Firebase - Authentication = */
 

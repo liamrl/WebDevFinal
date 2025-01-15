@@ -278,4 +278,27 @@ classes to make the sign out buttons work
     gap: 1em;
 }
  
+#posts-container { 
+    margin-top: 32px; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 16px; 
+} 
+    
+.post-card { 
+    padding: 16px; 
+    background-color: var(--post-color);
+    border-radius: var(--element-border-radius); 
+    box-shadow: 3px 3px 3px black; 
+} 
+    
+.post-card h3 { 
+    margin: 0; 
+    font-weight: 600; 
+} 
+    
+.post-card p { 
+    margin: 8px 0; 
+}
+    
 
