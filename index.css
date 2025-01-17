@@ -276,15 +276,22 @@ classes to make the sign out buttons work
     display: flex;
     flex-direction: column;
     gap: 1em;
+    align-itemS: center
 }
- 
+
 #posts-container { 
     margin-top: 32px; 
     display: grid; 
     grid-template-columns: repeat(3, 1fr); 
     gap: 16px; 
+    justify-items: center; 
+    width: 100%;
 } 
-    
+
+#fetch-posts-btn {
+    margin-bottom: 20px
+}
+
 .post-card { 
     padding: 16px; 
     background-color: var(--post-color);
