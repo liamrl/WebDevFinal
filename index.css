@@ -1,16 +1,16 @@
 :root {
-    --primary-color: #FFDE00;
-    --primary-light-color: #FFE769;
-    --secondary-color: #FFE4BA;
-    --secondary-light-color: #FFF6E8;
-    --post-color: #62EEA8;
-    --delete-color: #FF9F9F;
-    --light-color: #FFFEFC;
-    --grey-color: #747E79;
-    --dark-color: #000000;
+    --primary-color: dodgerblue;
+    --primary-light-color: lightblue;
+    --secondary-color: plum;
+    --secondary-light-color: lavender;
+    --post-color: skyblue;
+    --delete-color: lightcoral;
+    --light-color: floralwhite;
+    --grey-color: dimgray;
+    --dark-color: black;
 
-    --primary-font: 'Cabin', sans-serif;
-    --seconday-font: 'Calistoga', sans-serif;
+    --primary-font: 'Arial', sans-serif;
+    --seconday-font: 'Times Roman Numeral', sans-serif;
     
     --border-width: 3px;
     --element-border-radius: 5px;
@@ -244,6 +244,7 @@ textarea {
     color: var(--grey-color);
  }
  
+ 
 /* 
 classes to make the sign out buttons work 
 */
@@ -308,4 +309,7 @@ classes to make the sign out buttons work
     margin: 8px 0; 
 }
     
+
+/* === Radio Buttons === */
+
 

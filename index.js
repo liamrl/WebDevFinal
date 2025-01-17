@@ -55,6 +55,7 @@ const userGreetingEl = document.getElementById("user-greeting")
 const textareaEl = document.getElementById("post-input")
 const postButtonEl = document.getElementById("post-btn")
 
+const fetchYourPostsButtonEl = document.getElementById("fetch-your-posts-btn")
 const fetchPostsButtonEl = document.getElementById("fetch-posts-btn"); 
 const postsContainerEl = document.getElementById("posts-container"); 
 
@@ -67,6 +68,8 @@ createAccountButtonEl.addEventListener("click", authCreateAccountWithEmail)
 signOutButtonEl.addEventListener("click", authSignOut)
 
 postButtonEl.addEventListener("click", postButtonPressed)
+
+fetchYourPostsButtonEl.addEventListener("click", fetchUserPosts);
 
 fetchPostsButtonEl.addEventListener("click", fetchAllPosts);
 
@@ -111,6 +114,28 @@ function showUserGreeting(element, user){
     }
 }
 
+function fetchUserPosts() {
+    const postsQuery = query(collection(db, "posts"))
+
+    const user = auth.currentUser
+
+    getDocs(postsQuery) 	
+    .then((querySnapshot) => { 
+    postsContainerEl.innerHTML = ""; 
+
+    querySnapshot.forEach((doc) => { 
+        const post = doc.data(); 
+        if (post.uid === user.uid){
+            displayPost(post);
+        }
+    }); 
+    })
+    .catch((error) => { 
+    console.error("Error fetching posts: ", error.message);
+     });
+}
+
+
 function fetchAllPosts() { 
     const postsQuery = query(collection(db, "posts"))
     
@@ -133,12 +158,9 @@ function displayPost(post) {
 
     const postCardEl = document.createElement("div"); 
     postCardEl.classList.add("post-card");
-    let createdAt = post.createdAt
-    if (!post.createdAt){
-        createdAt = "Unknown time"
-    } 
-    postCardEl.innerHTML = ` <h3>${post.uid}</h3> 
-                            <p><strong>Posted on:</strong> ${createdAt} </p> 
+    
+    postCardEl.innerHTML = ` <h3>${post.email}</h3> 
+                            <p><strong>Posted on:</strong> ${post.createdAt.toDate()} </p> 
                             <p>${post.body}</p> `; 
     
     postsContainerEl.appendChild(postCardEl);
@@ -236,6 +258,7 @@ async function addPostToDB(postBody, user) {
         const docRef = await addDoc(collection(db, "posts"), {
             body: postBody,
             uid: user.uid,
+            email: user.email,
             createdAt: serverTimestamp()
         });
         console.log("Document written with ID: ", docRef.id);
