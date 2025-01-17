@@ -280,8 +280,8 @@ classes to make the sign out buttons work
  
 #posts-container { 
     margin-top: 32px; 
-    display: flex; 
-    flex-direction: column; 
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); 
     gap: 16px; 
 } 
     

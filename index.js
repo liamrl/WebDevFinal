@@ -142,7 +142,7 @@ function displayPost(post) {
                             <p>${post.body}</p> `; 
     
     postsContainerEl.appendChild(postCardEl);
-    
+
     }
     
     
